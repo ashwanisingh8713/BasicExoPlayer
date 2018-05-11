@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="232dp"
         android:keepScreenOn="true"
-        app:use_controller="true"/>
+        app:use_controller="true"
+        />
 
 </android.support.constraint.ConstraintLayout>

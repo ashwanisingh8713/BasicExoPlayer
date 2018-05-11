@@ -73,12 +73,14 @@ import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.opengles.GL10;
 
+import static com.google.android.exoplayer2.Player.STATE_BUFFERING;
+import static com.google.android.exoplayer2.Player.STATE_ENDED;
+import static com.google.android.exoplayer2.Player.STATE_IDLE;
+import static com.google.android.exoplayer2.Player.STATE_READY;
+
 /** Manages the {@link ExoPlayer}, the IMA plugin and all video playback. */
 /* package */ final class PlayerManager implements PlaybackPreparer {
 
-  // Old Implementation
-//  private final ImaAdsLoader adsLoader;
-//  private final DataSource.Factory manifestDataSourceFactory;
   private final DataSource.Factory mediaDataSourceFactory;
 
   private ViewGroup adUiViewGroup;
@@ -144,26 +146,14 @@ import javax.microedition.khronos.opengles.GL10;
       playerView.setPlaybackPreparer(this);
     }
 
-    String[] extensions;
-    Uri[] uris;
 
-    // This is the MediaSource representing the content media (i.e. not the ad).
-//    String contentUrl = context.getString(R.string.content_url);
-
-    // This is youtube dash url, with this Ads are working
-//    String contentUrl = "http://www.youtube.com/api/manifest/dash/id/3aa39fa2cc27967f/source/youtube?as=fmp4_audio_clear,fmp4_sd_hd_clear&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0&ipbits=0&expire=19000000000&signature=A2716F75795F5D2AF0E88962FFCD10DB79384F29.84308FF04844498CE6FBCE4731507882B8307798&key=ik0";
-
-//    String contentUrl = "http://playready.directtaps.net/smoothstreaming/SSWSS720H264/SuperSpeedway_720.ism";
-//    String contentUrl = "http://dash.edgesuite.net/dash264/TestCases/1a/netflix/exMPD_BIP_TC1.mpd";
     String contentUrl = "https://video.thehindu.com/thehindu/7129Mizoram-Football.mp4";
 
     // New Implementation
     MediaSource[] contentMediaSource = new MediaSource[1];
-//    contentMediaSource[0] = buildMediaSource(Uri.parse(contentUrl), "mpd", mainHandler, eventLogger);
     contentMediaSource[0] = buildMediaSource(Uri.parse(contentUrl), null, mainHandler, eventLogger);
 
     MediaSource mediaSource = new ConcatenatingMediaSource(contentMediaSource);
-
 
     // Prepare the player with the source.
     player.seekTo(contentPosition);
@@ -185,8 +175,6 @@ import javax.microedition.khronos.opengles.GL10;
       player = null;
     }
   }
-
-
 
 
   private MediaSource buildMediaSource(
@@ -249,14 +237,28 @@ import javax.microedition.khronos.opengles.GL10;
     public void onLoadingChanged(boolean isLoading) {
       Log.i("Ashwani", "onLoadingChanged :: "+isLoading);
 
-      if(!isLoading) {
 
-      }
     }
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-      Log.i("Ashwani", "onPlayerStateChanged");
+      switch (playbackState) {
+        case STATE_IDLE:
+          Log.i("Ashwani", "idel");
+          break;
+        case STATE_BUFFERING:
+          Log.i("Ashwani", "buffering");
+          playerView.showProgressBar();
+          break;
+        case STATE_READY:
+          Log.i("Ashwani", "ready");
+          playerView.hideProgressBar();
+          break;
+        case STATE_ENDED:
+          Log.i("Ashwani", "ended");
+          playerView.hideProgressBar();
+          break;
+      }
     }
 
     @Override
@@ -288,15 +290,6 @@ import javax.microedition.khronos.opengles.GL10;
     public void onSeekProcessed() {
       Log.i("Ashwani", "onSeekProcessed");
     }
-  }
-
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-  // Get The Image Frame from Video
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-
-  private void getImageFrame() {
-//    playerView.getPlayer().getVideoComponent().getVideoScalingMode(
   }
 
 

@@ -36,6 +36,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ControlDispatcher;
 import com.google.android.exoplayer2.DefaultControlDispatcher;
@@ -224,6 +226,7 @@ public class PlayerView extends FrameLayout {
   private boolean controllerHideDuringAds;
   private boolean controllerHideOnTouch;
   private int textureViewRotation;
+  private ProgressBar progressBar;
 
 
   public PlayerView(Context context) {
@@ -363,6 +366,9 @@ public class PlayerView extends FrameLayout {
     this.controllerAutoShow = controllerAutoShow;
     this.controllerHideDuringAds = controllerHideDuringAds;
     this.useController = useController && controller != null;
+
+    progressBar = findViewById(R.id.progressBar);
+
     hideController();
   }
 
@@ -1075,6 +1081,14 @@ public class PlayerView extends FrameLayout {
 
   public void setInLandScape(boolean inLandScape) {
     controller.setInLandScape(inLandScape);
+  }
+
+  public void showProgressBar() {
+    progressBar.setVisibility(VISIBLE);
+  }
+
+  public void hideProgressBar() {
+    progressBar.setVisibility(GONE);
   }
 
 
