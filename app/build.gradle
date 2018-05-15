@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOL_VERSION
     defaultConfig {
         applicationId "com.mbtechpro.myapplication"
-        minSdkVersion 15
-        targetSdkVersion 26
+        minSdkVersion MINIMUM_SDK_VERSION
+        targetSdkVersion TARGETED_SDK_VERSION
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -25,6 +26,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(':core')
-    implementation project(':ui')
+    implementation project(':exo_core')
+    implementation project(':exo_ui')
 }

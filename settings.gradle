@@ -1,1 +1,1 @@
-include ':app', ':core', ':ui'
+include ':app', ':exo_core', ':exo_ui'

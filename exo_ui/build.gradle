@@ -11,16 +11,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-apply from: '../constants.gradle'
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion project.ext.compileSdkVersion
-    buildToolsVersion project.ext.buildToolsVersion
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOL_VERSION
 
     defaultConfig {
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
+        minSdkVersion MINIMUM_SDK_VERSION
+        targetSdkVersion TARGETED_SDK_VERSION
     }
 
     buildTypes {
@@ -34,8 +33,8 @@ android {
 
 dependencies {
     //    compile project(modulePrefix + 'library-core')
-    compile 'com.android.support:support-annotations:' + supportLibraryVersion
-    implementation project(':core')
+    implementation "com.android.support:support-annotations:$SUPPORT_VERSION"
+    implementation project(':exo_core')
 }
 
 ext {
